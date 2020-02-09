@@ -7,10 +7,17 @@
     tools:context=".MainActivity">
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/recycler_view"
-        tools:listitem="@layout/note_item"
-        />
+        tools:listitem="@layout/note_item" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom||end"
+        android:layout_margin="32dp"
+        android:src="@drawable/ic_add_black_24dp" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

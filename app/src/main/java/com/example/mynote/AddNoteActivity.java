@@ -46,11 +46,14 @@ public class AddNoteActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.saveButton:
                 saveNote();
+            default:
+
+                return super.onOptionsItemSelected(item);
         }
-        return super.onOptionsItemSelected(item);
+
     }
 
     private void saveNote() {
@@ -59,8 +62,7 @@ public class AddNoteActivity extends AppCompatActivity {
         //@todo: add priority after connecting to internet
 
 
-
-        if (title.trim().isEmpty() ||desc.trim().isEmpty()){
+        if (title.trim().isEmpty() || desc.trim().isEmpty()) {
             Toast.makeText(this, "Please write something naaaa", Toast.LENGTH_SHORT).show();
         }
 

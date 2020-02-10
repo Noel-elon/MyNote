@@ -31,6 +31,17 @@ public class AddNoteActivity extends AppCompatActivity {
         priority.setMinValue(1);
         priority.setMaxValue(10);
 
+        Intent intent = getIntent();
+        if (intent.hasExtra("ID")) {
+            setTitle("Edit Note");
+            titleET.setText(intent.getStringExtra("Title"));
+            descET.setText(intent.getStringExtra("Desc"));
+            priority.setValue(intent.getIntExtra("Priority", 1));
+
+        } else {
+            setTitle("Add Note");
+        }
+
         getSupportActionBar().setHomeAsUpIndicator(R.drawable.ic_close_black_24dp);
 
     }
@@ -59,7 +70,7 @@ public class AddNoteActivity extends AppCompatActivity {
     private void saveNote() {
         String title = titleET.getText().toString().trim();
         String desc = descET.getText().toString().trim();
-        //@todo: add priority after connecting to internet
+        int prior = priority.getValue();
 
 
         if (title.trim().isEmpty() || desc.trim().isEmpty()) {
@@ -67,9 +78,14 @@ public class AddNoteActivity extends AppCompatActivity {
         }
 
         Intent data = new Intent();
+        int id = getIntent().getIntExtra("ID", -1);
+
+        if (id != -1) {
+            data.putExtra("ID", id);
+        }
         data.putExtra("Title", title);
         data.putExtra("Desc", desc);
-        data.putExtra("Priority", title);
+        data.putExtra("Priority", prior);
 
         setResult(RESULT_OK, data);
         finish();

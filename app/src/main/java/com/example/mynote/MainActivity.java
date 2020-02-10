@@ -71,6 +71,21 @@ public class MainActivity extends AppCompatActivity {
 
                 Toast.makeText(MainActivity.this, "Note Deleted", Toast.LENGTH_SHORT).show();
             }
+        }).attachToRecyclerView(recyclerView);
+
+        adapter.setOnItemClick(new NoteAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(Note note) {
+                Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
+                intent.putExtra("ID", note.getId());
+                intent.putExtra("Title", note.getTitle());
+                intent.putExtra("Desc", note.getDescription());
+                intent.putExtra("Priority", note.getPriority());
+
+                startActivityForResult(intent, 2);
+
+
+            }
         });
     }
 
@@ -88,9 +103,22 @@ public class MainActivity extends AppCompatActivity {
 
             Toast.makeText(this, "Saved Succesfully", Toast.LENGTH_SHORT).show();
 
-        } else {
+        } else if (requestCode == 2 && resultCode == RESULT_OK) {
+            int id = data.getIntExtra("ID", -1);
+            if(id == -1){
+                Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
+            }
+            String title = data.getStringExtra("Title");
+            String desc = data.getStringExtra("Desc");
+            int priority = data.getIntExtra("Priority", 1);
 
-            Toast.makeText(this, "Not saved", Toast.LENGTH_SHORT).show();
+            Note note = new Note(title, priority, desc);
+            note.setId(id);
+            noteViewModel.update(note);
+
+            Toast.makeText(this, "Note Updated", Toast.LENGTH_SHORT).show();
+        }else {
+
         }
     }
 

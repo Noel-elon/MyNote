@@ -75,6 +75,7 @@ public class AddNoteActivity extends AppCompatActivity {
 
         if (title.trim().isEmpty() || desc.trim().isEmpty()) {
             Toast.makeText(this, "Please write something naaaa", Toast.LENGTH_SHORT).show();
+            return;
         }
 
         Intent data = new Intent();

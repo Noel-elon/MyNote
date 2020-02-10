@@ -36,6 +36,15 @@
             android:layout_height="wrap_content"
             android:layout_below="@id/text_view_title"
             android:text="Description" />
+
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="#494D49"
+            android:layout_below="@id/text_view_description"
+            android:layout_marginTop="32dp"
+            />
     </RelativeLayout>
 
 </androidx.cardview.widget.CardView>

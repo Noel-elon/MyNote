@@ -16,6 +16,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -25,10 +26,11 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private NoteViewModel noteViewModel;
+  public Button floatingActionButton;
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        FloatingActionButton floatingActionButton = findViewById(R.id.floatingActionAdd);
+    public void onCreate(Bundle savedInstanceState) {
+        floatingActionButton = findViewById(R.id.floatingActionAdd);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override

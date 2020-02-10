@@ -11,6 +11,8 @@ import java.util.List;
 
 public class NoteViewModel extends AndroidViewModel {
     private NoteRepository repository;
+
+
     private LiveData<List<Note>> allNotes;
 
     public NoteViewModel(@NonNull Application application) {

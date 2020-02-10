@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModel;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.lifecycle.ViewModelProviders;
 import androidx.recyclerview.widget.ItemTouchHelper;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -26,11 +27,14 @@ import java.util.List;
 public class MainActivity extends AppCompatActivity {
 
     private NoteViewModel noteViewModel;
-  public Button floatingActionButton;
+  public FloatingActionButton floatingActionButton;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
-        floatingActionButton = findViewById(R.id.floatingActionAdd);
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        floatingActionButton = findViewById(R.id.AddFab);
 
         floatingActionButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -40,9 +44,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
         RecyclerView recyclerView = findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setHasFixedSize(true);
@@ -51,12 +52,27 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setAdapter(adapter);
 
 
-        noteViewModel = new ViewModelProvider(this).get(NoteViewModel.class);
+        noteViewModel = ViewModelProviders.of(this).get(NoteViewModel.class);
         noteViewModel.getAllNotes().observe(this, new Observer<List<Note>>() {
             @Override
             public void onChanged(List<Note> notes) {
                 //update RV
                 adapter.submitList(notes);
+            }
+        });
+
+        adapter.setOnItemClick(new NoteAdapter.onItemClickListener() {
+            @Override
+            public void onItemClick(Note note) {
+                Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
+                intent.putExtra("ID", note.getId());
+                intent.putExtra("Title", note.getTitle());
+                intent.putExtra("Desc", note.getDescription());
+                intent.putExtra("Priority", note.getPriority());
+
+                startActivityForResult(intent, 2);
+
+
             }
         });
 
@@ -75,20 +91,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }).attachToRecyclerView(recyclerView);
 
-        adapter.setOnItemClick(new NoteAdapter.onItemClickListener() {
-            @Override
-            public void onItemClick(Note note) {
-                Intent intent = new Intent(MainActivity.this, AddNoteActivity.class);
-                intent.putExtra("ID", note.getId());
-                intent.putExtra("Title", note.getTitle());
-                intent.putExtra("Desc", note.getDescription());
-                intent.putExtra("Priority", note.getPriority());
 
-                startActivityForResult(intent, 2);
-
-
-            }
-        });
     }
 
     @Override

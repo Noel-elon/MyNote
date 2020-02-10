@@ -54,7 +54,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChanged(List<Note> notes) {
                 //update RV
-                adapter.setNotes(notes);
+                adapter.submitList(notes);
             }
         });
 
@@ -105,7 +105,7 @@ public class MainActivity extends AppCompatActivity {
 
         } else if (requestCode == 2 && resultCode == RESULT_OK) {
             int id = data.getIntExtra("ID", -1);
-            if(id == -1){
+            if (id == -1) {
                 Toast.makeText(this, "Something went wrong", Toast.LENGTH_SHORT).show();
             }
             String title = data.getStringExtra("Title");
@@ -117,7 +117,7 @@ public class MainActivity extends AppCompatActivity {
             noteViewModel.update(note);
 
             Toast.makeText(this, "Note Updated", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
 
         }
     }
